@@ -3,10 +3,13 @@ import path from 'path'
 import { NODE_ENV, PORT } from "./configs/env.config.js";
 import authRouter from "./routes/auth.route.js";
 import messageRouter from "./routes/message.route.js";
+import { connectDb } from "./lib/db.js";
 
 const app = express();
 const __dirname = path.resolve();
 
+//middleware
+app.use(express.json());
 
 //routers
 app.use('/api/auth' , authRouter);
@@ -20,4 +23,8 @@ if(NODE_ENV === 'production'){
         res.sendFile(path.join(__dirname , "../frontend/dist/index.html"));
     })
 }
-app.listen(PORT || 3000 , () => console.log(`Server is live: http://localhost:${PORT || 3000}`));
+app.listen(PORT || 3000 , async () => {
+
+    await connectDb();
+    console.log(`Server is live: http://localhost:${PORT || 3000}`)
+});
