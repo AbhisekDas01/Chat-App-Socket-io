@@ -1,3 +1,5 @@
+import { CLIENT_URL } from "../configs/env.config.js";
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/User.model.js";
 
@@ -50,7 +52,7 @@ export const signup = async (req , res) => {
 
         if(newUser){
 
-            await newUser.save();
+            const savedUser = await newUser.save();
             generateToken(newUser._id , res);
             
 
@@ -62,6 +64,12 @@ export const signup = async (req , res) => {
             });
 
             //send a welcome email to user
+            
+            try {
+                await sendWelcomeEmail(savedUser.email , savedUser.fullName , CLIENT_URL);
+            } catch (error) {
+                
+            }
 
 
         } else {
