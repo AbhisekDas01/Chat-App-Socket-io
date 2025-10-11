@@ -1,5 +1,6 @@
 import express from "express";
 import path from 'path'
+import cookieParser from 'cookie-parser'
 import { NODE_ENV, PORT } from "./configs/env.config.js";
 import authRouter from "./routes/auth.route.js";
 import messageRouter from "./routes/message.route.js";
@@ -10,6 +11,7 @@ const __dirname = path.resolve();
 
 //middleware
 app.use(express.json());
+app.use(cookieParser());
 
 //routers
 app.use('/api/auth' , authRouter);

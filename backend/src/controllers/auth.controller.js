@@ -1,7 +1,7 @@
 import { CLIENT_URL } from "../configs/env.config.js";
 import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import { generateToken } from "../lib/utils.js";
-import User from "../models/User.model.js";
+import User from "../models/user.model.js";
 
 
 export const signup = async (req, res) => {
